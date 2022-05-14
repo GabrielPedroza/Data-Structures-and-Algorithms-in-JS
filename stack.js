@@ -22,40 +22,11 @@ Array (when using like a stack)
 
 const stack = [] // u can make an array act like a stack but will have some caveats. Show interviewer the options and ask what they would prefer.
 
-function Stack1() {
-	// not preferred
-	this.count = 0
-	this.storage = []
-
-	this.push = value => {
-		this.storage[this.count] = value
-		this.count++
-	}
-
-	this.pop = () => {
-		this.count === 0 && undefined
-		this.count--
-		const elDeleted = this.storage[this.count]
-		delete this.storage[this.count]
-		return elDeleted
-	}
-
-	this.peek = () => {
-		return this.storage[this.count - 1]
-	}
-
-	this.length = () => {
-		return this.count
-	}
-}
-
-const stack1 = new Stack1()
-
 class Stack2 {
 	// preferred
 	constructor() {
 		this.count = 0 // keeps track of length
-		this.storage = [] // where we will store the nodes
+		this.storage = {} // where we will store the nodes. using object to remove the methods that arrays come with
 	}
 
 	push(value) {
@@ -81,5 +52,34 @@ class Stack2 {
 }
 
 const stack2 = new Stack2()
+
+function Stack1() {
+	// not preferred
+	this.count = 0
+	this.storage = {}
+
+	this.push = value => {
+		this.storage[this.count] = value
+		this.count++
+	}
+
+	this.pop = () => {
+		this.count === 0 && undefined
+		this.count--
+		const elDeleted = this.storage[this.count]
+		delete this.storage[this.count]
+		return elDeleted
+	}
+
+	this.peek = () => {
+		return this.storage[this.count - 1]
+	}
+
+	this.length = () => {
+		return this.count
+	}
+}
+
+const stack1 = new Stack1()
 
 // classes are functions but just have cleaner and better syntax. It is preferable to use classes instead of functions when creating class-like functions
