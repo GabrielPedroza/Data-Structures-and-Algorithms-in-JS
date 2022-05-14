@@ -25,7 +25,7 @@ const stack = [] // u can make an array act like a stack but will have some cave
 class Stack2 {
 	// preferred
 	constructor() {
-		this.count = 0 // keeps track of length
+		this.count = 0 // keeps track of length. optional but cleaner since index and length are offset by 1
 		this.storage = {} // where we will store the nodes. using object to remove the methods that arrays come with
 	}
 
