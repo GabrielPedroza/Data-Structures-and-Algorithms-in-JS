@@ -121,3 +121,9 @@ also has built-in iterables like Object.keys .values and .entries
 You can also convert it to an array using: Array.from(mySet, mapFn(optional btw)) or [...set] you can add higher order functions (filter, reduce, forEach, etc...)
 
 */
+
+// intersect can be simulated via
+const intersection = new Set([...mySet1].filter(x => mySet2.has(x)))
+
+// difference can be simulated via
+const difference = new Set([...mySet1].filter(x => !mySet2.has(x)))
