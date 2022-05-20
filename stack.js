@@ -122,8 +122,13 @@ You can also convert it to an array using: Array.from(mySet, mapFn(optional btw)
 
 */
 
+const mySet1 = new Set([1, 2, 3, 4, 5, 6])
+const mySet2 = new Set([1, 2, 4, 6, 7, 8, 9])
+
 // intersect can be simulated via
 const intersection = new Set([...mySet1].filter(x => mySet2.has(x)))
+// console.log(intersection) // {1, 2, 4, 6}
 
 // difference can be simulated via
 const difference = new Set([...mySet1].filter(x => !mySet2.has(x)))
+// console.log(difference) // {3, 5}
