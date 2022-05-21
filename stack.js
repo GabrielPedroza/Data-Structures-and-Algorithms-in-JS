@@ -1,37 +1,23 @@
 /* 
 A stack is a LIFO (last in; first out) data structure. 
 
-Arrays has richer methods, more ways to traverse, insert and delete elements anywhere and has about the same big o as stacks since they are dynamic.
-You should use a stack if you don't need all the rich methods arrays brings so your code can be cleaner and understood by others. Usually used with linked lists.
-
 Examples: Keeping track of books that are stacked; Keeping a track history like how it is on webpages (back and front arrows on the left side of url); 
 
 Stack
-- Access O(N)
-- Search O(N) Usually not in stacks methods since it's LIFO but can be traversed if needed (depends on how it is stored (object or array))
-- Insertion (push) O(1)
-- Deletion (pop) O(1)
-
-Array (when using like a stack)
-- Access O(1)
+- Access O(1) Memory storage is contiguous for arrays. 
+- Push/Pop O(1) amortized. Worst case is linear
+- Peek - O(1)
 - Search O(N)
-- Insertion O(1) (amortized) when inserting at the end whilst using a dynamic array (js uses dynamic arrays btw). O(N) static
-- Deletion O(1)
 
-Stack but using hash map as storage
-- Access O(1)
-- Search O(1) because of hash function in play
-- Traverse keys, values or entries O(N)
-- Insert & Delete - O(1) because of the hash functions but still is amortized if hash function is shitty (stored as a linked list)
 */
 
-const stack1 = [] // u can make an array act like a stack but will have some caveats. (Bonus points: Explain to the interviewer the options and ask what they would prefer)
+const stack1 = [] // Best option. Dynamic array. Already has built-in "stack" methods (push, pop, length, etc...). If it was not dynamic, then you will use a singly linked list
 
 class Stack2 {
-	// preferred
+	// preferred over Stack3
 	constructor() {
 		this.count = 0 // keeps track of length. optional but cleaner since index and length are offset by 1
-		this.storage = {} // where we will store the nodes. using object to remove the methods that arrays come with
+		this.storage = [] // this can be an array or an object. Would make more logical sense to be an array
 	}
 
 	push(value) {
@@ -40,7 +26,7 @@ class Stack2 {
 	}
 
 	pop() {
-		this.count === 0 && undefined // guard clause to make sure there is nodes in stack
+		if (this.count === 0) return undefined // guard clause to make sure there is nodes in stack
 		this.count--
 		const elDeleted = this.storage[this.count] // saves the value ONLY to show what was deleted. It is deleted regardless
 		delete this.storage[this.count] // actually deletes node
@@ -61,7 +47,7 @@ const stack2 = new Stack2()
 function Stack3() {
 	// not preferred
 	this.count = 0
-	this.storage = {}
+	this.storage = []
 
 	this.push = value => {
 		this.storage[this.count] = value
@@ -69,7 +55,7 @@ function Stack3() {
 	}
 
 	this.pop = () => {
-		this.count === 0 && undefined
+		if (this.count === 0) return undefined
 		this.count--
 		const elDeleted = this.storage[this.count]
 		delete this.storage[this.count]
@@ -92,8 +78,6 @@ It is preferable to use classes instead of functions when creating class-like fu
 
 /*
 Sets are like arrays but elements do not repeat in sets
-
-Sets are keyed collections; Arrays are indexed collections
 
 const set = new Set([1,2,3]); // {1,2,3}
 const arr = Array.from(set); //[1,2,3] (second param of array is a map function)
