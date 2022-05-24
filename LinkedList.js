@@ -87,9 +87,49 @@ class LinkedList {
 		this.length--
 	}
 
-	deleteElement(element) {}
+	deleteElement(element) {
+		let previousNode, currentNode
 
-	indexOf(element) {}
+		let currentIndex = 0
+		currentNode = this.head
+
+		// to check the first element in the list
+		if (currentNode.element === element) {
+			const deletedNode = currentNode
+			this.head = currentNode.next
+			return deletedNode
+		}
+
+		while (currentNode) {
+			if (currentNode.element === element) {
+				const deletedNode = currentNode
+				previousNode.next = currentNode.next
+				return deletedNode
+			}
+			currentIndex++
+
+			previousNode = currentNode
+			currentNode = currentNode.next
+		}
+
+		return null
+	}
+
+	indexOf(element) {
+		let currentNode = this.head
+
+		let currentIndex = 0
+
+		while (currentNode) {
+			if (currentNode.element === element) {
+				return currentIndex
+			}
+			currentIndex++
+			currentNode = currentNode.next
+		}
+
+		return null
+	}
 
 	isEmpty() {
 		return this.length === 0
@@ -123,7 +163,10 @@ conga.insert(1)
 conga.insert(2)
 conga.insert(3)
 conga.insert(4)
-conga.deleteFrom(3)
+console.log(conga.deleteElement(2))
+console.log(conga.deleteElement(5))
+console.log(conga.printList())
+console.log(conga.indexOf(1))
 
 console.log(conga.toArray())
 
