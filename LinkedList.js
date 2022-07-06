@@ -1,3 +1,13 @@
+/*
+Access Head: O(1)
+Access Tail: O(N) (for singly; doubly is O(1))
+Access Middle Node: O(N)
+Delete Head: O(1)
+Delete Tail: O(N) to search + O(1) to remove = O(N) (for singly; doubly is O(1)) 
+Delete Middle Node: O(N) to search + O(1) to remove = O(N)
+Searching for a Node/value: O(N)
+*/
+
 class Node {
 	constructor(element) {
 		this.element = element
@@ -200,7 +210,21 @@ class DoublyLinkedList {
 		return this.tail
 	}
 
-	insertAtBeginning(element) {}
+	insertAtBeginning(element) {
+		const node = new DNode(element)
+
+		if (this.length === 0) {
+			this.head = node
+			this.tail = node
+			this.length++
+			return
+		}
+
+		node.next = this.head
+		this.head = node
+
+		this.length++
+	}
 
 	deleteAtBeginning() {}
 
@@ -208,9 +232,9 @@ class DoublyLinkedList {
 
 	deleteAtEnd() {}
 
-	toArray() {}
+	insertAt(element, index) {}
 
-	printCollection() {}
+	deleteAt(index) {}
 }
 
 class Queue {
