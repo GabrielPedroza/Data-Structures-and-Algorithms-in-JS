@@ -3,7 +3,7 @@ Access Head: O(1)
 Access Tail: O(N) (for singly; doubly is O(1))
 Access Middle Node: O(N)
 Delete Head: O(1)
-Delete Tail: O(N) to search + O(1) to remove = O(N) (for singly; doubly is O(1)) 
+Delete Tail: O(N) to search + O(1) to remove = O(N) (for doubly it's O(1) because we have a reference to the tail) 
 Delete Middle Node: O(N) to search + O(1) to remove = O(N)
 Searching for a Node/value: O(N)
 */

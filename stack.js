@@ -5,19 +5,19 @@ Examples: Keeping track of books that are stacked; Keeping a track history like 
 
 Stack
 - Access O(1) Memory storage is contiguous for arrays. 
-- Push/Pop O(1) amortized. Worst case is linear
+- Push/Pop O(1) amortized. Worst case is linear but not considered in the context of coding interviews. (IMO, tell them though to make sure they know you know)
 - Peek - O(1)
 - Search O(N)
-
 */
 
 const stack1 = [] // Best option. Dynamic array. Already has built-in "stack" methods (push, pop, length, etc...). If it was not dynamic, then you will use a singly linked list
+const mySet = new Set() // Can be best option depending on what your use case is. Does not have built-in stack or hof methods but does have has, add, delete, clear and size with object iterables as well.
 
 class Stack2 {
 	// preferred over Stack3
 	constructor() {
 		this.count = 0 // keeps track of length. optional but cleaner since index and length are offset by 1
-		this.storage = [] // this can be an array or an object. Would make more logical sense to be an array
+		this.storage = {} // this can be an array or an object. Would make more logical sense to be an array
 	}
 
 	push(value) {
@@ -88,7 +88,11 @@ Remember: objects and arrays are stored differently in memory address so they ca
 Also, if you care about the order, you can rely on sets, not arrays 
 */
 
-const set = new Set([1, 2, 3, 4, 4, 5, 6, 6]) // {1, 2, 3, 4, 5, 6}  Will not repeat by value, no exceptions
+/**
+ * @returns {1, 2, 3, 4, 5, 6}  Will not repeat by value, no exceptions
+ **/
+
+const set = new Set([1, 2, 3, 4, 4, 5, 6, 6])
 
 /* 
 Built in methods (all voided except size) of sets:
@@ -100,9 +104,9 @@ Built in methods (all voided except size) of sets:
 - size (it is a property (don't add parenthesis) )
 
 also has built-in iterables like Object.keys .values and .entries
-// keys and values do the same thing so it can be compatible with new map. entries returns iterable object [value, value] tl;dr use keys
+// keys and values do the same thing so it can be compatible with new map. entries returns iterable object [value, value] tl;dr use keys or values for some super weird edge case
 
-You can also convert it to an array using: Array.from(mySet, mapFn(optional btw)) or [...set] you can add higher order functions (filter, reduce, forEach, etc...)
+You can also convert it to an array using: Array.from(mySet, mapFn(optional btw)) or [...set] so you can add higher order functions (filter, reduce, forEach, etc...)
 
 */
 
