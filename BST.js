@@ -40,13 +40,13 @@ class BST {
 		return searchTree(node) // begin the recursion (passing the root node in the parameter)
 	}
 
-	findMin() {
+	findMin(node = this.root) {
 		// the leftmost branch of a binary search tree
 		if (this.root === 0) {
 			return null
 		}
 
-		let node = this.root
+		let currentNode = node
 
 		const findMinNode = node => {
 			if (node.left != null) {
@@ -55,16 +55,16 @@ class BST {
 			return node
 		}
 
-		return findMinNode(node)
+		return findMinNode(currentNode)
 	}
 
-	findMax() {
+	findMax(node = this.root) {
 		// the rightmost branch of a binary search tree
 		if (this.root === 0) {
 			return null
 		}
 
-		let node = this.root
+		let currentNode = node
 
 		const findMaxNode = node => {
 			if (node.right != null) {
@@ -74,7 +74,7 @@ class BST {
 			return node
 		}
 
-		return findMaxNode(node)
+		return findMaxNode(currentNode)
 	}
 
 	find(data) {
@@ -141,8 +141,9 @@ class BST {
 					node = node.left
 					return
 				} else {
-					const replacementNode = this.findMin(node.right)
+					let replacementNode = this.findMin(node.right)
 					node.data = replacementNode.data
+					node.right = replacementNode.right
 					return
 				}
 			}
@@ -228,3 +229,4 @@ console.log(myBST.findMin())
 console.log(myBST.find(42))
 console.log(myBST.remove(87))
 console.log(myBST.inorder())
+console.log(myBST.find(79))
