@@ -92,43 +92,139 @@ class BST {
 			if (node == null) return null // edge case
 
 			if (data < node.data) {
+				if (!node.left) return null
 				if (data === node.left.data) {
 					return node.left
 				}
 
 				return searchTree(node.left)
 			} else if (data > node.data) {
+				if (!node.right) return null
+
 				if (data === node.right.data) {
 					return node.right
 				}
 
 				return searchTree(node.right)
-			} else {
+			} else if (data === node.data) {
 				return node
+			} else {
+				return null
 			}
 		}
 
 		return searchTree(node)
 	}
+
+	remove(data) {
+		if (this.root == null) return null
+
+		let node = this.root
+
+		const searchTree = node => {
+			if (node == null) return null
+			if (data < node.data) {
+				return searchTree(node.left)
+			} else if (data > node.data) {
+				return searchTree(node.right)
+			} else {
+				// if child node does not have any children
+				if (!node.left && !node.right) {
+					node = null
+					return
+					// if it has one child (on the right)
+				} else if (!node.left) {
+					node = node.right
+					return
+					// if it has one child (on the left)
+				} else if (!node.right) {
+					node = node.left
+					return
+				} else {
+					const replacementNode = this.findMin(node.right)
+					node.data = replacementNode.data
+					return
+				}
+			}
+		}
+
+		return searchTree(node)
+	}
+
+	preorder() {
+		if (this.root == null) {
+			return null
+		}
+
+		let node = this.root
+		const preorderedArrayOfBST = new Set() // every value should be unique unless otherwise specified
+		const traverseTree = node => {
+			if (node) {
+				preorderedArrayOfBST.add(node.data)
+				traverseTree(node.left)
+				traverseTree(node.right)
+			}
+		}
+
+		traverseTree(node)
+		return [...preorderedArrayOfBST].forEach(i => console.log(i))
+	}
+
+	inorder() {
+		if (this.root == null) {
+			return null
+		}
+
+		let node = this.root
+		const preorderedArrayOfBST = new Set() // every value should be unique unless otherwise specified
+		const traverseTree = node => {
+			if (node) {
+				traverseTree(node.left)
+				preorderedArrayOfBST.add(node.data)
+				traverseTree(node.right)
+			}
+		}
+
+		traverseTree(node)
+		return [...preorderedArrayOfBST].forEach(i => console.log(i))
+	}
+
+	postorder() {
+		if (this.root == null) {
+			return null
+		}
+
+		let node = this.root
+		const preorderedArrayOfBST = new Set() // every value should be unique unless otherwise specified
+		const traverseTree = node => {
+			if (node) {
+				traverseTree(node.left)
+				traverseTree(node.right)
+				preorderedArrayOfBST.add(node.data)
+			}
+		}
+
+		traverseTree(node)
+		return [...preorderedArrayOfBST].forEach(i => console.log(i))
+	}
 }
 
 const myBST = new BST()
 
-myBST.add(1)
-myBST.add(2)
-myBST.add(3)
-myBST.add(4)
-myBST.add(5)
-myBST.add(6)
-myBST.add(7)
-myBST.add(8)
-myBST.add(15)
 myBST.add(79)
-myBST.add(46)
-myBST.add(32)
-myBST.add(97)
-myBST.add(12)
+myBST.add(87)
+myBST.add(54)
+myBST.add(53)
+myBST.add(55)
+myBST.add(88)
+myBST.add(90)
+myBST.add(43)
+myBST.add(15)
+myBST.add(109)
+myBST.add(82)
 
 console.log(myBST.findMax())
 console.log(myBST.findMin())
-console.log(myBST.find(8))
+console.log(myBST.find(42))
+console.log(myBST.remove(87))
+console.log(myBST.inorder())
