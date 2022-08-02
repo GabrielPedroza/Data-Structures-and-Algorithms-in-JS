@@ -1,12 +1,40 @@
-/*
-Access Head: O(1)
-Access Tail: O(N) (for singly; doubly is O(1))
-Access Middle Node: O(N)
-Delete Head: O(1)
-Delete Tail: O(N) to search + O(1) to remove = O(N) (for doubly it's O(1) because we have a reference to the tail) 
-Delete Middle Node: O(N) to search + O(1) to remove = O(N)
-Searching for a Node/value: O(N)
-*/
+/**
+ * A linked list is a data structure that uses nodes that have properties that point to other nodes (like a pointer) so every node is stored arbitrarily (not contiguous)
+ *
+ * If the problem wants fast insertion and deletion times (not amortized), use a linked list (always constant because memory isn't contiguous but searching is linear)
+ * If the problem wants fast access times, use an array (always constant because memory is contiguous)
+ *
+ * Best implementations of a linked list:
+ * Anything where an array can be used but you want constant insert/delete
+ * Queues, Stacks, browsers previous and next buttons, etc...
+ *
+ *
+ * Singly Linked List
+ *
+ * @example 0 -> 1 -> 2 -> 3 -> 4 -> null
+ *
+ * Doubly Linked List
+ *
+ * @example null <- 0 <-> 1 <-> 2 <-> 3 <-> 4 -> null
+ *
+ *
+ * Linked List
+ * @Access Head O(1)
+ * @Access Tail: O(N) (for singly; doubly is O(1))
+ * @Access Middle Node: O(N)
+ * @Delete Head: O(1)
+ * @Delete Tail: O(N) to search + O(1) to remove = O(N) (for doubly it's O(1) because we have a reference to the tail)
+ * @Delete Middle Node: O(N) to search + O(1) to remove = O(N)
+ * @Search for a Node: O(N) to insert a node in the middle, you have to search through the list O(N)
+ *
+ * Array (JS uses dynamic arrays)
+ *
+ * @Access O(1) (memory is contiguous)
+ * @Search O(N)
+ * @Insert O(1) in the end but amortized; O(N) anywhere else in the array
+ * @Delete O(1) in the end but amortized; O(N) anywhere else in the array
+ *
+ */
 
 class Node {
 	constructor(element) {

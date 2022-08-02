@@ -1,13 +1,16 @@
 /**
  * Binary Search Tree
- * 
+ *
+ * A binary tree will always have at most 2 children because it is binary. A binary search tree is the same concept but the nodes are organized by value
+ * (parent is greater than left child and less than right child)
+ *
  * @Access average -> log(n) | worst -> O(n)
  * @Search average -> log(n) | worst -> O(n)
  * @Insertion average -> log(n) | worst -> O(n)
  * @Deletion average -> log(n) | worst -> O(n)
  *
  * Ask if the binary search tree will be balanced(h <= 1), complete(different leaf nodes but nodes have to start far-left), full(no child or 2 children only) or perfect
- * 
+ *
  */
 
 class Node {
