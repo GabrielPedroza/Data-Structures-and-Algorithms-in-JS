@@ -1,3 +1,15 @@
+/**
+ * Binary Search Tree
+ * 
+ * @Access average -> log(n) | worst -> O(n)
+ * @Search average -> log(n) | worst -> O(n)
+ * @Insertion average -> log(n) | worst -> O(n)
+ * @Deletion average -> log(n) | worst -> O(n)
+ *
+ * Ask if the binary search tree will be balanced(h <= 1), complete(different leaf nodes but nodes have to start far-left), full(no child or 2 children only) or perfect
+ * 
+ */
+
 class Node {
 	constructor(data, left = null, right = null) {
 		this.data = data
@@ -209,24 +221,3 @@ class BST {
 		return [...preorderedArrayOfBST].forEach(i => console.log(i))
 	}
 }
-
-const myBST = new BST()
-
-myBST.add(79)
-myBST.add(87)
-myBST.add(54)
-myBST.add(53)
-myBST.add(55)
-myBST.add(88)
-myBST.add(90)
-myBST.add(43)
-myBST.add(15)
-myBST.add(109)
-myBST.add(82)
-
-console.log(myBST.findMax())
-console.log(myBST.findMin())
-console.log(myBST.find(42))
-console.log(myBST.remove(87))
-console.log(myBST.inorder())
-console.log(myBST.find(79))

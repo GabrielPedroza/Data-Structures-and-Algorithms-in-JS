@@ -3,11 +3,18 @@ A stack is a LIFO (last in; first out) data structure.
 
 Examples: Keeping track of books that are stacked; Keeping a track history like how it is on webpages (back and front arrows on the left side of url); 
 
-Stack
-- Access O(1) Memory storage is contiguous for arrays. 
-- Push/Pop O(1) amortized. Worst case is linear but not considered in the context of coding interviews. (IMO, tell them though to make sure they know you know)
-- Peek - O(1)
-- Search O(N)
+Array Stack
+Access:  O(1) Memory storage is contiguous for arrays. 
+Search:  O(N)
+Insertion:  O(1) amortized. Worst case is linear but not considered in the context of coding interviews. (IMO, tell them though to make sure they know you know)
+Deletion:  O(1) 
+
+Singly Linked List
+
+Access: O(N)
+Search: O(N)
+Insertion: O(1)
+Deletion: O(1)
 */
 
 const stack1 = [] // Best option. Dynamic array. Already has built-in "stack" methods (push, pop, length, etc...). If it was not dynamic, then you will use a singly linked list

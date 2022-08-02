@@ -176,28 +176,6 @@ class LinkedList {
 	}
 }
 
-const conga = new LinkedList()
-conga.insert(1)
-conga.insert(2)
-conga.insert(3)
-conga.insert(4)
-console.log(conga.deleteElement(2))
-console.log(conga._length) // 3
-console.log(conga.deleteElement(5)) // null
-console.log(conga.printList()) // this.head -> 1 ->  3 -> 4 -> null
-console.log(conga.indexOf(1)) // 0
-console.log(conga.toArray()) // [1, 3, 4]
-console.log(conga.printList()) // this.head -> 1 ->  3 -> 4 -> null
-console.log(conga._length) // 3
-console.log(conga.deleteFrom(1)) // 3
-console.log(conga._length)
-console.log(conga.deleteFrom(1)) // 4
-console.log(conga._length)
-console.log(conga.deleteFrom(1)) // 1
-console.log(conga._length)
-conga.deleteFrom(2) // [1, 3]
-console.log(conga.printList()) // this.head -> 1 ->  3 -> 4 -> null
-
 // Linked List queue
 // queue needs to be accessed from the head and the tail so we need to implement a doubly linked list so enqueue/dequeue from head and tail will be constant time.
 class DNode {
@@ -209,270 +187,100 @@ class DNode {
 }
 
 // null <- 0 <-> 1 <-> 2 <-> 3 <-> 4 -> null
+
 class DoublyLinkedList {
 	constructor() {
-		this.length = 0
 		this.head = null
 		this.tail = null
+		this.length = 0
 	}
 
-	get _length() {
-		return this.length
+	prepend(value) {
+		const node = new DNode(value)
+		if (this.length === 0) {
+			this.head = node
+			this.tail = node
+		} else {
+			this.head.prev = node
+			node.next = this.head
+			this.head = node
+		}
+
+		this.length++
+		return
 	}
 
-	get _head() {
-		return this.head
-	}
-
-	get _tail() {
-		return this.tail
-	}
-
-	insertAtBeginning(element) {
-		const node = new DNode(element)
+	append(value) {
+		const node = new DNode(value)
 
 		if (this.length === 0) {
 			this.head = node
 			this.tail = node
-			this.length++
-			return
-		}
-
-		node.next = this.head
-		this.head = node
-
-		this.length++
-	}
-
-	deleteAtBeginning() {}
-
-	insertAtEnd(element) {}
-
-	deleteAtEnd() {}
-
-	insertAt(element, index) {}
-
-	deleteAt(index) {}
-}
-// can be singly or doubly
-// no clear head or tail; tail points to head which forms a closed circle
-// this.tail(4 in this list) <- 0 <-> 1 <-> 2 <-> 3 <-> 4 -> this.head(0 in this list) (no null value if not empty) (doubly)
-class SinglyCircularNode {
-	constructor(element) {
-		this.element = element
-		this.next = null
-	}
-}
-class CircularLinkedList {
-	constructor() {
-		this.length = 0
-		this.head = null
-	}
-
-	//Other methods go here
-	//Get element at specific index
-	getElementAt(index) {
-		if (index >= 0 || index <= this.length) {
-			let node = this.head
-			for (let i = 0; i < index && node != null; i++) {
-				node = node.next
-			}
-			return node
-		}
-		return undefined
-	}
-
-	//Add new node
-	append(element) {
-		//Create new node
-		const node = new Node(element)
-		let current
-
-		//If head is empty
-		//Then make new node head
-		if (this.head === null) {
-			this.head = node
 		} else {
-			//Else add the new node as the next node
-			//And mark the next of new node to the head
-			current = this.getElementAt(length - 1)
-			current.next = node
+			this.tail.next = node
+			node.prev = this.tail
+			this.tail = node
 		}
 
-		node.next = this.head
 		this.length++
+		return
 	}
 
-	//Insert at given position
-	insert(element, index) {
-		if (index >= 0 && index <= this.length) {
-			const node = new Node(element)
-			let current = this.head
-
-			//Insert at head
-			if (index === 0) {
-				if (this.head === null) {
-					this.head = node
-					node.next = this.head
-				} else {
-					node.next = current
-					current = this.getElementAt(this.length)
-					this.head = node
-					current.next = this.head
-				}
+	remove(index) {
+		if (index < 0 || index >= this.length) return null
+		// checking the head
+		if (index === 0) {
+			if (this.length === 1) {
+				this.head = null
+				this.tail = null
 			} else {
-				//Insert at given index (middle or end)
-				const previous = this.getElementAt(index - 1)
-				node.next = previous.next
-				previous.next = node
-			}
-
-			this.length++
-			return true
-		}
-		return false
-	}
-
-	//Remove at any position
-	removeAt(index) {
-		if (index >= 0 && index < this.length) {
-			let current = this.head
-
-			//Remove from head
-			if (index === 0) {
-				if (this.length === 1) {
-					this.head = undefined
-				} else {
-					const removed = this.head
-					current = this.getElementAt(this.length - 1)
-					this.head = this.head.next
-					current.next = this.head
-					current = removed
-				}
-			} else {
-				//Remove at given index (middle or end)
-				const previous = this.getElementAt(index - 1)
-				current = previous.next
-				previous.next = current.next
+				this.head = this.head.next
+				this.head.prev = null
 			}
 
 			this.length--
-			return current.element
+			return
 		}
-		return undefined
-	}
+		// checking the tail
+		if (index === this.length - 1) {
+			this.tail = this.tail.prev
+			this.tail.next = null
+			this.length--
+			return
+		}
 
-	//Get the indexOf item
-	indexOf(elm) {
-		let current = this.head,
-			index = -1
+		let node = this.head
+		let nodeIndex = 0
+		let passed = false
 
-		//If element found then return its position
-		while (current) {
-			if (elm === current.element) {
-				return ++index
+		while (node) {
+			if (nodeIndex === index) {
+				node.prev.next = node.next
+				node.next.prev = node.prev
+				this.length--
+				passed = true
+				return
 			}
-
-			index++
-			current = current.next
+			node = node.next
+			nodeIndex++
 		}
 
-		//Else return -1
-		return -1
-	}
-
-	//Find the item in the list
-	isPresent(elm) {
-		return this.indexOf(elm) !== -1
-	}
-
-	//Get the head
-	getHead() {
-		return this.head
-	}
-
-	//Delete an item from the list
-	delete(elm) {
-		return this.removeAt(this.indexOf(elm))
-	}
-
-	//Delete the first item from the list
-	deleteHead() {
-		this.removeAt(0)
-	}
-
-	//Print item of the string
-	toString() {
-		let current = this.head
-		let string = ""
-		const temp = this.head.element
-
-		while (current) {
-			if (temp === current.next.element) {
-				string += current.element + (current.next ? "\n" : "")
-				break
-			}
-
-			string += current.element + (current.next ? "\n" : "")
-			current = current.next
+		if (passed) {
+			this.length--
 		}
-
-		return string
+		return null
 	}
 
-	//Convert list to array
-	toArray() {
-		let arr = [],
-			current = this.head
-		const temp = this.head.element
+	printList() {
+		if (this.length === 0) return null
+		if (this.length === 1) return console.log(this.head)
+		if (this.length === 2) return console.log(this.head, this.tail)
 
-		while (current) {
-			//Break if first element detected
-			if (temp === current.next.element) {
-				arr.push(current.element)
-				break
-			}
+		let node = this.head
 
-			arr.push(current.element)
-			current = current.next
+		while (node) {
+			console.log(node)
+			node = node.next
 		}
-
-		return arr
-	}
-
-	//Check if list is empty
-	isEmpty() {
-		return this.length === 0
-	}
-
-	//Get the size of the list
-	size() {
-		return this.length
-	}
-}
-
-class Queue {
-	constructor() {
-		this.storage = new DoublyLinkedList()
-	}
-
-	get _size() {
-		this.storage._length
-	}
-
-	enqueue(element) {
-		this.storage.insertAtBeginning(element)
-	}
-
-	dequeue() {
-		this.storage.deleteAtEnd()
-	}
-
-	toArray() {
-		this.storage.toArray()
-	}
-
-	printCollection() {
-		this.storage.printCollection()
 	}
 }
