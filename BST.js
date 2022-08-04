@@ -11,6 +11,8 @@
  *
  * Ask if the binary search tree will be balanced(h <= 1), complete(different leaf nodes but nodes have to start far-left), full(no child or 2 children only) or perfect
  *
+ * If the binary/binary search tree input is huge, do not use recursion anywhere for better time
+ *
  */
 
 class Node {
@@ -177,8 +179,8 @@ class BST {
 		const traverseTree = node => {
 			if (node) {
 				preorderedArrayOfBST.add(node.data)
-				traverseTree(node.left)
-				traverseTree(node.right)
+				node.left && traverseTree(node.left)
+				node.right && traverseTree(node.right)
 			}
 		}
 
@@ -192,17 +194,17 @@ class BST {
 		}
 
 		let node = this.root
-		const preorderedArrayOfBST = new Set() // every value should be unique unless otherwise specified
+		const inorderedArrayOfBST = new Set() // every value should be unique unless otherwise specified
 		const traverseTree = node => {
 			if (node) {
-				traverseTree(node.left)
-				preorderedArrayOfBST.add(node.data)
-				traverseTree(node.right)
+				node.left && traverseTree(node.left)
+				inorderedArrayOfBST.add(node.data)
+				node.right && traverseTree(node.right)
 			}
 		}
 
 		traverseTree(node)
-		return [...preorderedArrayOfBST].forEach(i => console.log(i))
+		return [...inorderedArrayOfBST].forEach(i => console.log(i))
 	}
 
 	postorder() {
@@ -211,16 +213,99 @@ class BST {
 		}
 
 		let node = this.root
-		const preorderedArrayOfBST = new Set() // every value should be unique unless otherwise specified
+		const postorderedArrayOfBST = new Set() // every value should be unique unless otherwise specified
 		const traverseTree = node => {
 			if (node) {
-				traverseTree(node.left)
-				traverseTree(node.right)
-				preorderedArrayOfBST.add(node.data)
+				node.left && traverseTree(node.left)
+				node.right && traverseTree(node.right)
+				postorderedArrayOfBST.add(node.data)
 			}
 		}
 
 		traverseTree(node)
-		return [...preorderedArrayOfBST].forEach(i => console.log(i))
+		return [...postorderedArrayOfBST].forEach(i => console.log(i))
+	}
+
+	minHeight(root = this.root) {
+		// Corner case. Should never be hit unless the code is
+		// called on root = NULL
+		if (root == null) return 0
+
+		// Base case : Leaf Node. This accounts for height = 0.
+		if (root.left == null && root.right == null) return 0
+
+		// If left subtree is NULL, recur for right subtree
+		if (root.left == null) return this.minHeight(root.right) + 1
+
+		// If right subtree is NULL, recur for left subtree
+		if (root.right == null) return this.minHeight(root.left) + 1
+
+		return (
+			Math.min(this.minHeight(root.left), this.minHeight(root.right)) + 1
+		)
+	}
+
+	maxHeight(node = this.root) {
+		if (node == null) return 0
+
+		if (!node.left && !node.right) return 0
+
+		if (!node.left) return this.maxHeight(node.right) + 1
+
+		if (!node.right) return this.maxHeight(node.left) + 1
+
+		return (
+			Math.max(this.maxHeight(node.left), this.maxHeight(node.right)) + 1
+		)
+	}
+
+	isBalanced() {}
+
+	BFS(root = this.root) {
+		// always remember BFS uses a queue which uses shift method (qb: quarterback)
+		let queue = [root]
+		let res = []
+
+		while (queue.length) {
+			let curr = queue.shift()
+			res.push(curr.data) // pre-order because this is in front of the queue pushes. If middle: in-order. If last: post-order
+
+			curr.left && queue.push(curr.left)
+			curr.right && queue.push(curr.right)
+		}
+
+		return res
+	}
+
+	DFS(root = this.root) {
+		let stack = [root] // always remember DFS uses a stack which uses pop method
+		let res = []
+
+		while (stack.length) {
+			let curr = stack.pop()
+			res.push(curr.data) // pre-order because this is in front of the queue pushes. If middle: in-order. If last: post-order
+
+			curr.left && stack.push(curr.left)
+			curr.right && stack.push(curr.right)
+		}
+
+		return res.reverse() // remember to reverse it to get the leaf nodes first
 	}
 }
+
+const myTree = new BST()
+
+myTree.add(79)
+myTree.add(53)
+myTree.add(83)
+myTree.add(52)
+myTree.add(77)
+myTree.add(81)
+myTree.add(86)
+myTree.add(99)
+myTree.add(84)
+
+console.log(myTree.BFS())
+console.log(myTree.DFS())
+console.log(myTree.maxHeight())
+console.log(myTree.minHeight())
