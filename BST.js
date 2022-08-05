@@ -290,12 +290,24 @@ class BST {
 			let curr = stack.pop()
 			res.push(curr.data) // pre-order because this is in front of the queue pushes. If middle: in-order. If last: post-order
 
+			curr.right && stack.push(curr.right) // optional: reverse these two to start from the left subtree
 			curr.left && stack.push(curr.left)
-			curr.right && stack.push(curr.right)
 		}
 
-		return res.reverse() // remember to reverse it to get the leaf nodes first
+		return res
 	}
 }
 
 const myTree = new BST()
+
+myTree.add(9)
+myTree.add(4)
+myTree.add(17)
+myTree.add(3)
+myTree.add(6)
+myTree.add(22)
+myTree.add(5)
+myTree.add(7)
+myTree.add(20)
+
+console.log(myTree.DFS())
