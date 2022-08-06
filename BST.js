@@ -298,15 +298,15 @@ class BST {
 	}
 }
 
-const myTree = new BST()
-
-myTree.add(9)
-myTree.add(4)
-myTree.add(17)
-myTree.add(3)
-myTree.add(6)
-myTree.add(22)
-myTree.add(5)
-myTree.add(7)
-myTree.add(20)
-console.log(myTree.minHeight())
+// const myTree = new BST()
+// 
+// myTree.add(9)
+// myTree.add(4)
+// myTree.add(17)
+// myTree.add(3)
+// myTree.add(6)
+// myTree.add(22)
+// myTree.add(5)
+// myTree.add(7)
+// myTree.add(20)
+// console.log(myTree.minHeight())
