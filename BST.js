@@ -235,10 +235,10 @@ class BST {
 		if (root.left == null && root.right == null) return height
 
 		// If left subtree is NULL, recur for right subtree
-		if (root.left == null) return this.minHeight(root.right), height++
+		if (root.left == null) return this.minHeight(root.right, height++)
 
 		// If right subtree is NULL, recur for left subtree
-		if (root.right == null) return this.minHeight(root.left), height++
+		if (root.right == null) return this.minHeight(root.left, height++)
 
 		return (
 			Math.min(this.minHeight(root.left), this.minHeight(root.right)) + 1
@@ -250,9 +250,9 @@ class BST {
 
 		if (!root.left && !root.right) return height
 
-		if (!root.left) return this.maxHeight(root.right), height++
+		if (!root.left) return this.maxHeight(root.right, height++)
 
-		if (!root.right) return this.maxHeight(root.left), height++
+		if (!root.right) return this.maxHeight(root.left, height++)
 
 		return (
 			Math.max(this.maxHeight(root.left), this.maxHeight(root.right)) + 1
@@ -309,5 +309,4 @@ myTree.add(22)
 myTree.add(5)
 myTree.add(7)
 myTree.add(20)
-
-console.log(myTree.DFS())
+console.log(myTree.minHeight())
