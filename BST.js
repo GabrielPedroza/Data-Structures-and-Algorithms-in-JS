@@ -226,33 +226,33 @@ class BST {
 		return [...postorderedArrayOfBST].forEach(i => console.log(i))
 	}
 
-	minHeight(root = this.root, height = 0) {
+	minHeight(root = this.root) {
 		// Corner case. Should never be hit unless the code is
 		// called on root = NULL
-		if (root == null) return height
+		if (root == null) return 0
 
 		// Base case : Leaf Node. This accounts for height = 0.
-		if (root.left == null && root.right == null) return height
+		if (root.left == null && root.right == null) return 0
 
 		// If left subtree is NULL, recur for right subtree
-		if (root.left == null) return this.minHeight(root.right, height++)
+		if (root.left == null) return this.minHeight(root.right)
 
 		// If right subtree is NULL, recur for left subtree
-		if (root.right == null) return this.minHeight(root.left, height++)
+		if (root.right == null) return this.minHeight(root.left)
 
 		return (
 			Math.min(this.minHeight(root.left), this.minHeight(root.right)) + 1
 		)
 	}
 
-	maxHeight(root = this.root, height = 0) {
-		if (root == null) return height
+	maxHeight(root = this.root) {
+		if (root == null) return 0
 
-		if (!root.left && !root.right) return height
+		if (!root.left && !root.right) return 0
 
-		if (!root.left) return this.maxHeight(root.right, height++)
+		if (!root.left) return this.maxHeight(root.right)
 
-		if (!root.right) return this.maxHeight(root.left, height++)
+		if (!root.right) return this.maxHeight(root.left)
 
 		return (
 			Math.max(this.maxHeight(root.left), this.maxHeight(root.right)) + 1
@@ -297,16 +297,3 @@ class BST {
 		return res
 	}
 }
-
-// const myTree = new BST()
-// 
-// myTree.add(9)
-// myTree.add(4)
-// myTree.add(17)
-// myTree.add(3)
-// myTree.add(6)
-// myTree.add(22)
-// myTree.add(5)
-// myTree.add(7)
-// myTree.add(20)
-// console.log(myTree.minHeight())
