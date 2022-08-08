@@ -19,6 +19,36 @@
 
 const stack1 = [] // Best option. Dynamic array. Already has built-in "stack" methods (push, pop, length, etc...). If it was not dynamic, then you will use a singly linked list
 
+class Stack {
+	constructor() {
+		this.storage = {}
+		this.count = 0
+	}
+
+	push(element) {
+		this.storage[this.count] = element
+		this.count++
+		return
+	}
+
+	pop() {
+		if (this.count === 0) return null
+
+		delete this.storage[this.count - 1]
+		this.count--
+
+		return
+	}
+
+	peek() {
+		return this.storage[this.count - 1]
+	}
+
+	get size() {
+		return this.count
+	}
+}
+
 /* classes are functions but just have cleaner and better syntax. 
 It is preferable to use classes instead of functions when creating class-like functions (for up-to-date code and syntactic sugar) */
 
