@@ -62,6 +62,10 @@ class Trie {
 				for (let letter of node.keys.keys()) {
 					search(node.keys.get(letter[0]), string.concat(letter))
 				}
+
+				if (node.end) {
+					resultWords.push(string)
+				}
 			} else {
 				return string.length > 0 && resultWords.push(string)
 			}
