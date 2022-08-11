@@ -1,5 +1,5 @@
 /**
- * A linked list is a data structure that uses nodes that have properties that point to other nodes (like a pointer) so every node is stored arbitrarily (not contiguous)
+ * A linked list is a data structure that uses nodes that have properties that point to other nodes (like a pointer) so every node is stored arbitrarily (not contiguous) in respect to memory addresses
  *
  * If the problem wants fast insertion and deletion times (not amortized), use a linked list (always constant because memory isn't contiguous but searching is linear)
  * If the problem wants fast access times, use an array (always constant because memory is contiguous)
@@ -113,8 +113,6 @@ class LinkedList {
 		if (index === 0) {
 			// remove current head node
 			this.head = currentNode.next
-		} else if (index === 1 && this.length === 1) {
-			return
 		} else {
 			let currentIndex = 0
 

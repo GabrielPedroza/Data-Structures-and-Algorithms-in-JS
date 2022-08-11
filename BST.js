@@ -3,6 +3,8 @@
  *
  * A binary tree will always have at most 2 children because it is binary. A binary search tree is the same concept but the nodes are organized by value
  * (parent is greater than left child and less than right child)
+ * 
+ * log(h) in a BST equates to log(n)
  *
  * @Access average -> log(n) | worst -> O(n)
  * @Search average -> log(n) | worst -> O(n)

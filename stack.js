@@ -11,7 +11,7 @@
  *
  * Singly Linked List
  *
- * @Access O(N)
+ * @Access O(N) unless head
  * @Search O(N)
  * @Insertion O(1)
  * @Deletion O(1)
@@ -80,9 +80,9 @@ Built in methods (all voided except size) of sets:
 - size (it is a property (don't add parenthesis) )
 
 also has built-in iterables like Object.keys .values and .entries
-// keys and values do the same thing so it can be compatible with new map. entries returns iterable object [value, value] tl;dr use keys or values for some super weird edge case
+// keys and values do the same thing so it can be compatible with new map. entries returns iterable object [value, value] tl;dr use keys()
 
-You can also convert it to an array using: Array.from(mySet, mapFn(optional btw)) or [...set] so you can add higher order functions (filter, reduce, forEach, etc...)
+You can also convert it to an array using: Array.from(mySet, mapFn(optional btw)) or [...set] so you can add higher order functions (filter, reduce, map, etc...)
 
 */
 
@@ -104,7 +104,7 @@ class mySet {
 	}
 
 	has(element) {
-		if (this.count === 0) return null
+		if (this.count === 0) return false
 		return this.storage.indexOf(element) !== -1
 	}
 
@@ -113,7 +113,7 @@ class mySet {
 
 		this.storage.push(element)
 		this.count++
-		return
+		return this
 	}
 
 	delete(element) {
@@ -133,7 +133,7 @@ class mySet {
 		this.count = 0
 	}
 
-	size() {
+	get size() {
 		return this.count
 	}
 
