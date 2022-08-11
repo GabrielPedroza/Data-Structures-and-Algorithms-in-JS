@@ -13,189 +13,160 @@
 
 class MinHeap {
 	constructor() {
-		this.heap = [null]
+		this.heap = []
 	}
 
 	getParentIndex(i) {
-		return Math.floor(i / 2)
+		return Math.floor((i - 1) / 2)
 	}
 
 	getLeftChildIndex(i) {
-		return Math.floor(i * 2)
+		return Math.floor(i * 2 + 1)
 	}
 
 	getRightChildIndex(i) {
-		return Math.floor(i * 2 + 1)
+		return Math.floor(i * 2 + 2)
 	}
 
 	swap(i1, i2) {
 		;[this.heap[i1], this.heap[i2]] = [this.heap[i2], this.heap[i1]]
 	}
 
-	insert(num) {
-		this.heap.push(num)
-		// we need at least 2 elements (index 0 is null for ease of use purposes) to start the heap structure
+	insert(element) {
+		this.heap.push(element)
+		this.heapifyUp()
+	}
+
+	heapifyUp() {
+		let idx = this.heap.length - 1
+
 		if (this.heap.length > 2) {
-			let idx = this.heap.length - 1
-			// the lower the number compared to the parent, the higher it goes onto the heap
+			// while index we inserted is smaller than parent (smaller element should go on top)
 			while (this.heap[idx] < this.heap[this.getParentIndex(idx)]) {
-				// if the index is not the root node
-				if (idx >= 1) {
-					this.swap(this.getParentIndex(idx), idx)
-					// if the parent is not the root node
-					if (this.getParentIndex(idx) > 1) {
-						idx = this.getParentIndex(idx)
-					} else {
-						break
-					}
-				}
+				this.swap(this.getParentIndex(idx), idx)
+				// check the parent of the new index position
+				idx = this.getParentIndex(idx)
 			}
 		}
 	}
 
-	remove() {
-		let smallest = this.heap[1]
-		if (this.heap.length > 2) {
-			this.heap[1] = this.heap[this.heap.length - 1]
-			this.heap.splice(this.heap.length - 1)
-			if (this.heap.length == 3) {
-				if (this.heap[1] > this.heap[2]) {
-					this.swap(1, 2)
-				}
-				return smallest
-			}
-			let i = 1
-			let left = 2 * i
-			let right = 2 * i + 1
-			while (
-				this.heap[i] >= this.heap[left] ||
-				this.heap[i] >= this.heap[right]
+	poll() {
+		const removedElement = this.heap[0]
+		this.heap[0] = this.heap[this.heap.length - 1]
+		this.heap.splice(this.heap.length - 1)
+		this.heapifyDown()
+		return removedElement
+	}
+
+	heapifyDown() {
+		let currentIndex = 0
+
+		while (this.heap[this.getLeftChildIndex(currentIndex)]) {
+			let smallestChildIndex =
+				this.heap[this.getLeftChildIndex(currentIndex)]
+
+			if (
+				this.heap[this.getRightChildIndex(currentIndex)] &&
+				this.heap[this.getLeftChildIndex(currentIndex)] >
+					this.heap[this.getRightChildIndex(currentIndex)]
 			) {
-				if (this.heap[left] < this.heap[right]) {
-					this.swap(i, left)
-					i = 2 * i
-				} else {
-					this.swap(i, right)
-					i = 2 * i + 1
-				}
-				left = 2 * i
-				right = 2 * i + 1
-				if (
-					this.heap[left] == undefined ||
-					this.heap[right] == undefined
-				) {
-					break
-				}
+				smallestChildIndex = this.getRightChildIndex(currentIndex)
+			} else {
+				smallestChildIndex = this.getLeftChildIndex(currentIndex)
 			}
-		} else if (this.heap.length == 2) {
-			this.heap.splice(1, 1)
-		} else {
-			return null
+
+			if (this.heap[currentIndex] > smallestChildIndex) {
+				this.swap(currentIndex, smallestChildIndex)
+				currentIndex = smallestChildIndex
+			} else {
+				return
+			}
 		}
-		return smallest
 	}
 
 	sort() {
-		let result = new Array()
-		while (this.heap.length > 1) {
-			result.push(this.remove())
-		}
+		const result = this.heap.sort((a, b) => a - b)
 		return result
 	}
 }
 
-const myMinHeap = new MinHeap()
-
-myMinHeap.insert(40)
-myMinHeap.insert(50)
-myMinHeap.insert(27)
-myMinHeap.insert(13)
-myMinHeap.insert(12)
-myMinHeap.insert(11)
-myMinHeap.insert(83)
-myMinHeap.insert(40)
-myMinHeap.insert(91)
-myMinHeap.insert(100)
-myMinHeap.insert(1)
-
-console.log(myMinHeap.sort())
-
-console.log(myMinHeap)
-
 class MaxHeap {
 	constructor() {
-		this.heap = [null]
+		this.heap = []
 	}
 
-	print() {
-		return this.heap
+	getParentIndex(i) {
+		return Math.floor((i - 1) / 2)
 	}
 
-	insert(num) {
-		this.heap.push(num)
+	getLeftChildIndex(i) {
+		return Math.floor(i * 2 + 1)
+	}
+
+	getRightChildIndex(i) {
+		return Math.floor(i * 2 + 2)
+	}
+
+	swap(i1, i2) {
+		// array destructuring. switching values of i1 to i2 and i2 to i1
+		;[this.heap[i1], this.heap[i2]] = [this.heap[i2], this.heap[i1]]
+	}
+
+	insert(element) {
+		this.heap.push(element)
+		this.heapifyUp()
+	}
+
+	heapifyUp() {
+		let idx = this.heap.length - 1
+
 		if (this.heap.length > 2) {
-			let idx = this.heap.length - 1
-			while (this.heap[idx] > this.heap[Math.floor(idx / 2)]) {
-				if (idx >= 1) {
-					;[this.heap[Math.floor(idx / 2)], this.heap[idx]] = [
-						this.heap[idx],
-						this.heap[Math.floor(idx / 2)],
-					]
-					if (Math.floor(idx / 2) > 1) {
-						idx = Math.floor(idx / 2)
-					} else {
-						break
-					}
-				}
+			// while index we inserted is larger than parent (larger element should go on top)
+			while (this.heap[idx] > this.heap[this.getParentIndex(idx)]) {
+				this.swap(this.getParentIndex(idx), idx)
+				// check the parent of the new index position
+				idx = this.getParentIndex(idx)
 			}
 		}
 	}
 
-	remove() {
-		let smallest = this.heap[1]
-		if (this.heap.length > 2) {
-			this.heap[1] = this.heap[this.heap.length - 1]
-			this.heap.splice(this.heap.length - 1)
-			if (this.heap.length == 3) {
-				if (this.heap[1] < this.heap[2]) {
-					;[this.heap[1], this.heap[2]] = [this.heap[2], this.heap[1]]
-				}
-				return smallest
-			}
-			let i = 1
-			let left = 2 * i
-			let right = 2 * i + 1
-			while (
-				this.heap[i] <= this.heap[left] ||
-				this.heap[i] <= this.heap[right]
+	poll() {
+		const maxValue = this.heap[0]
+		this.heap[0] = this.heap[this.heap.length - 1]
+		this.heap.splice(this.heap.length - 1)
+		this.heapifyDown()
+		return maxValue
+	}
+
+	heapifyDown() {
+		let currentIndex = 0
+		// while we have a left child (remember that heaps property follows inputs as a complete tree - from left to right)
+		// if we don't have a left child, we definitely won't have a right child
+		while (this.heap[this.getLeftChildIndex(currentIndex)]) {
+			let biggestChildIndex =
+				this.heap[this.getLeftChildIndex(currentIndex)]
+
+			if (
+				this.heap[this.getRightChildIndex(currentIndex)] &&
+				this.heap[this.getRightChildIndex(currentIndex)] >
+					this.heap[this.getLeftChildIndex(currentIndex)]
 			) {
-				if (this.heap[left] > this.heap[right]) {
-					;[this.heap[i], this.heap[left]] = [
-						this.heap[left],
-						this.heap[i],
-					]
-					i = 2 * i
-				} else {
-					;[this.heap[i], this.heap[right]] = [
-						this.heap[right],
-						this.heap[i],
-					]
-					i = 2 * i + 1
-				}
-				left = 2 * i
-				right = 2 * i + 1
-				if (
-					this.heap[left] == undefined ||
-					this.heap[right] == undefined
-				) {
-					break
-				}
+				biggestChildIndex = this.getRightChildIndex(currentIndex)
+			} else {
+				biggestChildIndex = this.getLeftChildIndex(currentIndex)
 			}
-		} else if (this.heap.length == 2) {
-			this.heap.splice(1, 1)
-		} else {
-			return null
+
+			if (this.heap[currentIndex] > this.heap[biggestChildIndex]) {
+				this.swap(currentIndex, biggestChildIndex)
+				currentIndex = biggestChildIndex
+			} else {
+				return
+			}
 		}
-		return smallest
+	}
+
+	sort() {
+		let result = this.heap.sort((a, b) => a - b)
+		return result
 	}
 }
