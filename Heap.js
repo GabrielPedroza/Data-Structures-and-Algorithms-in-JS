@@ -60,7 +60,7 @@ class MinHeap {
 			this.heap.splice(this.heap.length - 1)
 			if (this.heap.length == 3) {
 				if (this.heap[1] > this.heap[2]) {
-					this.swap([this.heap[1], this.heap[2]])
+					this.swap(1, 2)
 				}
 				return smallest
 			}
@@ -117,6 +117,8 @@ myMinHeap.insert(40)
 myMinHeap.insert(91)
 myMinHeap.insert(100)
 myMinHeap.insert(1)
+
+console.log(myMinHeap.sort())
 
 console.log(myMinHeap)
 
