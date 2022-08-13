@@ -37,6 +37,15 @@ class Graph {
 		}
 	}
 
+	dfsUndirected(source = this.adjList.keys().next().value, visited = {}) {
+		for (const neighbor of this.adjList.get(source)) {
+			if (!visited[neighbor]) {
+				visited[neighbor] = true
+				this.dfsUndirected(neighbor, visited)
+			}
+		}
+	}
+
 	bfsDirected(source = this.adjList.keys().next().value) {
 		let queue = [source]
 
@@ -101,4 +110,4 @@ graphAdjList.addEdge("b", "d")
 graphAdjList.addEdge("c", "e")
 graphAdjList.addEdge("d", "f")
 
-console.log(graphAdjList.adjList)
+console.log(graphAdjList.dfsUndirected())
